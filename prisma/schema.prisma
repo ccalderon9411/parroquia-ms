@@ -7,28 +7,27 @@ datasource db {
   provider = "postgresql"
 }
 
-model TipoDocumentIdentidad {
-  id                BigInt @id @default(autoincrement())
-  abreviatura       String @unique
-  descripcion       String?
-
-
-  personas     Persona[]
+model IdentityDocumentType {
+  id           BigInt  @id @default(autoincrement())
+  abbreviation String  @unique 
+  description  String? 
+  
+  people Person[]
 }
 
-model Persona {
-  id                         String @id @default(ulid()) @db.Uuid
-  tipoDocumentoIdentidadId   BigInt
-  numeroDocumentoIdentidad   String
-  nombres                    String
-  apellidoPaterno            String
-  apellidoMaterno            String
-  fechaNacimiento            DateTime?
-  lugarNacimiento            String?
-  padre                      String?
-  madre                      String?
+model Person {
+  id                       String    @id @default(ulid()) @db.Uuid
+  identityDocumentTypeId   BigInt    
+  identityDocumentNumber   String    
+  givenNames               String    
+  paternalSurname          String    
+  maternalSurname          String    
+  birthDate                DateTime? 
+  birthPlace               String?   
+  father                   String?   
+  mother                   String?   
 
-  // Relaciones
-  tipoDocumentoIdentidad TipoDocumentIdentidad @relation(fields: [tipoDocumentoIdentidadId], references: [id])
-  @@unique([tipoDocumentoIdentidadId, numeroDocumentoIdentidad])
+  identityDocumentType IdentityDocumentType @relation(fields: [identityDocumentTypeId], references: [id])
+
+  @@unique([identityDocumentTypeId, identityDocumentNumber])
 }
