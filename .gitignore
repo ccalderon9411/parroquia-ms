@@ -26,9 +26,27 @@ lerna-debug.log*
 # Yarn
 .yarn
 .yarnrc.yml
+yarn.lock
 
 # Docker
 .devcontainer
 
 # VSCode
 .vscode/*
+/src/generated/prisma
+
+# Tests
+/coverage
+/.nyc_output
+test-results
+test-results/*
+test-report.xml
+junit.xml
+sonar-project.properties
+gl-sast-report.json
+gl-secret-detection-report.json
+semgrep.sarif
+.scannerwork
+codecov
+codecov.*
+!codecov.yml

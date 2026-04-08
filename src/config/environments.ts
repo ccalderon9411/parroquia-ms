@@ -1,10 +1,10 @@
 // List of environments
 const environments = {
   test: '.env.test',
-  dev: '.env.dev',
+  dev: '.env',
   qa: '.env.qa',
   stg: '.env.stg',
-  production: '.env',
+  production: '.env.prd',
 };
 
 export const getEnvFilePath = (): string[] => {
