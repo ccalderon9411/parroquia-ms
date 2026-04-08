@@ -107,11 +107,6 @@
     "coverageDirectory": "coverage",
     "testEnvironment": "node"
   },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
       "eslint --fix",
