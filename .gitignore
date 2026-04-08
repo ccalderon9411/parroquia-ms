@@ -26,3 +26,9 @@ lerna-debug.log*
 # Yarn
 .yarn
 .yarnrc.yml
+
+# Docker
+.devcontainer
+
+# VSCode
+.vscode/*
