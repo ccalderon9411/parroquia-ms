@@ -28,5 +28,12 @@ export interface AppConfiguration {
         path: string;
         enabled: boolean;
     };
+    database: {
+        host: string;
+        port: number;
+        name: string;
+        user: string;
+        password: string;
+    };
     [key: string]: any;
 }

@@ -5,12 +5,31 @@ import { defineConfig } from "prisma/config";
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+const buildDatabaseUrl = (): string => {
+  const host = process.env.DATABASE_HOST || 'localhost';
+  const port = process.env.DATABASE_PORT || '5432';
+  const databaseName = process.env.DATABASE_NAME;
+  const user = process.env.DATABASE_USER;
+  const password = process.env.DATABASE_PASSWORD;
+
+  if (!databaseName || !user || !password) {
+    throw new Error(
+      'DATABASE_NAME, DATABASE_USER y DATABASE_PASSWORD son requeridas para Prisma.',
+    );
+  }
+
+  const encodedUser = encodeURIComponent(user);
+  const encodedPassword = encodeURIComponent(password);
+
+  return `postgresql://${encodedUser}:${encodedPassword}@${host}:${port}/${databaseName}`;
+};
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env.DATABASE_URL,
+    url: buildDatabaseUrl(),
   },
 });

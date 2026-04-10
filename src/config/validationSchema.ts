@@ -10,4 +10,9 @@ export const validationSchema: ObjectSchema<any> = Joi.object({
     ALLOWED_METHODS: Joi.string().default('GET, POST, PUT, DELETE'),
     SWAGGER_PATH: Joi.string().default('docs'),
     SWAGGER_ENABLED: Joi.boolean().truthy('true').falsy('false').default(false),
+    DATABASE_HOST: Joi.string().hostname().default('localhost'),
+    DATABASE_PORT: Joi.number().port().default(5432),
+    DATABASE_NAME: Joi.string().required(),
+    DATABASE_USER: Joi.string().required(),
+    DATABASE_PASSWORD: Joi.string().required(),
 });

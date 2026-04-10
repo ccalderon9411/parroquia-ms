@@ -13,6 +13,11 @@ const webpack = () => {
       filename: 'main.js',
     },
     resolve: {
+      extensionAlias: {
+        '.js': ['.ts', '.js'],
+        '.mjs': ['.mts', '.mjs'],
+        '.cjs': ['.cts', '.cjs'],
+      },
       extensions: ['.ts', '.js'],
     },
     module: {
