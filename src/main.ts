@@ -39,6 +39,24 @@ async function bootstrap() {
       .setDescription(`Swagger - ${project.description}`)
       .setExternalDoc('Documentation', project.homepage)
       .setContact(project.author.name, project.author.url, project.author.email)
+      .addBearerAuth(
+        {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'Access token',
+        },
+        'access-token',
+      )
+      .addBearerAuth(
+        {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'Refresh token',
+        },
+        'refresh-token',
+      )
       .addServer(`/${server.context}`)
       .build();
     const document: OpenAPIObject = SwaggerModule.createDocument(app, config, {

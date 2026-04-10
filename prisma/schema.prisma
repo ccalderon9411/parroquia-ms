@@ -21,7 +21,7 @@ model IdentityDocumentType {
 }
 
 model Person {
-  id                       String    @id @default(ulid()) @db.Uuid
+  id                       String    @id @default(uuid()) @db.Uuid
   identityDocumentTypeId   BigInt    
   identityDocumentNumber   String    
   givenNames               String    
@@ -38,6 +38,22 @@ model Person {
   updatedBy                String?
 
   identityDocumentType IdentityDocumentType @relation(fields: [identityDocumentTypeId], references: [id])
+  user                 User?
 
   @@unique([identityDocumentTypeId, identityDocumentNumber])
+}
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  personId  String   @unique @db.Uuid
+  username  String   @unique
+  password  String   
+  refreshTokenHash String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @default(now()) @updatedAt
+  updatedBy String?
+
+  person    Person   @relation(fields: [personId], references: [id])
 }

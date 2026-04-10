@@ -35,5 +35,13 @@ export interface AppConfiguration {
         user: string;
         password: string;
     };
+    auth: {
+        jwt: {
+            accessSecret: string;
+            refreshSecret: string;
+            accessExpiresIn: string;
+            refreshExpiresIn: string;
+        };
+    };
     [key: string]: any;
 }

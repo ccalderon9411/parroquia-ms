@@ -15,4 +15,8 @@ export const validationSchema: ObjectSchema<any> = Joi.object({
     DATABASE_NAME: Joi.string().required(),
     DATABASE_USER: Joi.string().required(),
     DATABASE_PASSWORD: Joi.string().required(),
+    JWT_ACCESS_SECRET: Joi.string().min(16).default('change-me-access-secret'),
+    JWT_REFRESH_SECRET: Joi.string().min(16).default('change-me-refresh-secret'),
+    JWT_ACCESS_EXPIRES_IN: Joi.string().default('15m'),
+    JWT_REFRESH_EXPIRES_IN: Joi.string().default('7d'),
 });

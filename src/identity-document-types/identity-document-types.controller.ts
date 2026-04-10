@@ -1,4 +1,5 @@
 import {
+  UseGuards,
   BadRequestException,
   Body,
   Controller,
@@ -12,6 +13,7 @@ import {
   Query,
 } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiBadRequestResponse,
   ApiBody,
   ApiConflictResponse,
@@ -25,6 +27,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { IsBoolean } from 'class-validator';
+import { JwtAccessGuard } from '../auth/guards/jwt-access.guard';
 import { IdentityDocumentType } from '../prisma/generated/client';
 import { CreateIdentityDocumentTypeDto } from './dto/create-identity-document-type.dto';
 import { IdentityDocumentTypeResponseDto } from './dto/identity-document-type-response.dto';
@@ -41,6 +44,8 @@ class SetIdentityDocumentTypeStatusDto {
 }
 
 @ApiTags('Identity Document Types')
+@ApiBearerAuth('access-token')
+@UseGuards(JwtAccessGuard)
 @Controller('identity-document-types')
 export class IdentityDocumentTypesController {
   constructor(

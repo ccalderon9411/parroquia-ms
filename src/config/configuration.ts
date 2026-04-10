@@ -39,5 +39,13 @@ export default registerAs("config", (): AppConfiguration => ({
       name: process.env.DATABASE_NAME || '',
       host: process.env.DATABASE_HOST || '',
       port: Number.parseInt(process.env.DATABASE_PORT || "5432", 10),
+    },
+    auth: {
+      jwt: {
+        accessSecret: process.env.JWT_ACCESS_SECRET || 'change-me-access-secret',
+        refreshSecret: process.env.JWT_REFRESH_SECRET || 'change-me-refresh-secret',
+        accessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN || '15m',
+        refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
+      },
     }
 }));
