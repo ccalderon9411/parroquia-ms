@@ -44,6 +44,18 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
+## Prisma
+
+El cliente generado de Prisma se escribe en src/prisma/generated.
+
+Para regenerarlo:
+
+```bash
+$ yarn prisma:generate
+```
+
+Cuando necesites importar PrismaClient o Prisma en código de aplicación, usa src/prisma/generated/client.
+
 ## Run tests
 
 ```bash

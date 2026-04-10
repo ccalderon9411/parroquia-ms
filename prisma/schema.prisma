@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output   = "../src/prisma/generated"
 }
 
 datasource db {
@@ -11,6 +11,11 @@ model IdentityDocumentType {
   id           BigInt  @id @default(autoincrement())
   abbreviation String  @unique 
   description  String? 
+  active       Boolean @default(true)
+  createdAt    DateTime @default(now())
+  createdBy    String?
+  updatedAt    DateTime @default(now()) @updatedAt
+  updatedBy    String?
   
   people Person[]
 }
@@ -26,6 +31,11 @@ model Person {
   birthPlace               String?   
   father                   String?   
   mother                   String?   
+  active                   Boolean   @default(true)
+  createdAt                DateTime  @default(now())
+  createdBy                String?
+  updatedAt                DateTime  @default(now()) @updatedAt
+  updatedBy                String?
 
   identityDocumentType IdentityDocumentType @relation(fields: [identityDocumentTypeId], references: [id])
 

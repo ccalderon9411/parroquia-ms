@@ -33,7 +33,7 @@ yarn.lock
 
 # VSCode
 .vscode/*
-/src/generated/prisma
+/src/prisma/generated
 
 # Tests
 /coverage

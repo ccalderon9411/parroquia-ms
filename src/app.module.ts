@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { getEnvFilePath, config, validationSchema } from './config';
 import { HealthController } from './health/health.controller';
 import { HealthService } from './health/health.service';
+import { IdentityDocumentTypesModule } from './identity-document-types/identity-document-types.module';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
@@ -18,6 +19,7 @@ import { PrismaModule } from './prisma/prisma.module';
       validationSchema,
     }),
     TerminusModule,
+    IdentityDocumentTypesModule,
     PrismaModule,
   ],
   controllers: [AppController, HealthController],
