@@ -8,6 +8,7 @@ import { getEnvFilePath, config, validationSchema } from './config';
 import { HealthController } from './health/health.controller';
 import { HealthService } from './health/health.service';
 import { IdentityDocumentTypesModule } from './identity-document-types/identity-document-types.module';
+import { PersonsModule } from './persons/persons.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 
@@ -23,6 +24,7 @@ import { UsersModule } from './users/users.module';
     AuthModule,
     TerminusModule,
     IdentityDocumentTypesModule,
+    PersonsModule,
     PrismaModule,
     UsersModule,
   ],
