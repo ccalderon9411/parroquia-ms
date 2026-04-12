@@ -36,7 +36,9 @@ export class IdentityDocumentTypesService {
   findByAbbreviation(
     abbreviation: string,
   ): Promise<IdentityDocumentType | null> {
-    return this.identityDocumentTypesRepository.findByAbbreviation(abbreviation);
+    return this.identityDocumentTypesRepository.findByAbbreviation(
+      abbreviation,
+    );
   }
 
   async create(
@@ -76,10 +78,7 @@ export class IdentityDocumentTypesService {
     return this.identityDocumentTypesRepository.delete(id);
   }
 
-  async setActive(
-    id: bigint,
-    active: boolean,
-  ): Promise<IdentityDocumentType> {
+  async setActive(id: bigint, active: boolean): Promise<IdentityDocumentType> {
     await this.findByIdOrFail(id);
     return this.identityDocumentTypesRepository.setActive(id, active);
   }

@@ -72,9 +72,10 @@ export class IdentityDocumentTypesController {
   async findAll(
     @Query('activeOnly') activeOnly?: string,
   ): Promise<IdentityDocumentTypeResponseDto[]> {
-    const identityDocumentTypes = await this.identityDocumentTypesService.findAll(
-      this.parseOptionalBoolean(activeOnly),
-    );
+    const identityDocumentTypes =
+      await this.identityDocumentTypesService.findAll(
+        this.parseOptionalBoolean(activeOnly),
+      );
     return identityDocumentTypes.map((identityDocumentType) =>
       this.toResponseDto(identityDocumentType),
     );
@@ -96,9 +97,8 @@ export class IdentityDocumentTypesController {
   async findById(
     @Param('id') id: string,
   ): Promise<IdentityDocumentTypeResponseDto> {
-    const identityDocumentType = await this.identityDocumentTypesService.findByIdOrFail(
-      this.parseId(id),
-    );
+    const identityDocumentType =
+      await this.identityDocumentTypesService.findByIdOrFail(this.parseId(id));
     return this.toResponseDto(identityDocumentType);
   }
 
@@ -113,11 +113,13 @@ export class IdentityDocumentTypesController {
   async create(
     @Body() createIdentityDocumentTypeDto: CreateIdentityDocumentTypeDto,
   ): Promise<IdentityDocumentTypeResponseDto> {
-    const identityDocumentType = await this.identityDocumentTypesService.create({
-      abbreviation: createIdentityDocumentTypeDto.abbreviation,
-      description: createIdentityDocumentTypeDto.description,
-      active: createIdentityDocumentTypeDto.active,
-    });
+    const identityDocumentType = await this.identityDocumentTypesService.create(
+      {
+        abbreviation: createIdentityDocumentTypeDto.abbreviation,
+        description: createIdentityDocumentTypeDto.description,
+        active: createIdentityDocumentTypeDto.active,
+      },
+    );
     return this.toResponseDto(identityDocumentType);
   }
 
@@ -165,10 +167,11 @@ export class IdentityDocumentTypesController {
     @Param('id') id: string,
     @Body() setIdentityDocumentTypeStatusDto: SetIdentityDocumentTypeStatusDto,
   ): Promise<IdentityDocumentTypeResponseDto> {
-    const identityDocumentType = await this.identityDocumentTypesService.setActive(
-      this.parseId(id),
-      setIdentityDocumentTypeStatusDto.active,
-    );
+    const identityDocumentType =
+      await this.identityDocumentTypesService.setActive(
+        this.parseId(id),
+        setIdentityDocumentTypeStatusDto.active,
+      );
     return this.toResponseDto(identityDocumentType);
   }
 

@@ -57,7 +57,9 @@ export class UsersController {
   @ApiBadRequestResponse({
     description: 'El parametro activeOnly debe ser true o false.',
   })
-  async findAll(@Query('activeOnly') activeOnly?: string): Promise<UserResponseDto[]> {
+  async findAll(
+    @Query('activeOnly') activeOnly?: string,
+  ): Promise<UserResponseDto[]> {
     const users = await this.usersService.findAll(
       this.parseOptionalBoolean(activeOnly),
     );
@@ -90,7 +92,8 @@ export class UsersController {
     type: UserResponseDto,
   })
   @ApiConflictResponse({
-    description: 'El nombre de usuario ya existe o la persona ya tiene usuario.',
+    description:
+      'El nombre de usuario ya existe o la persona ya tiene usuario.',
   })
   async create(@Body() createUserDto: CreateUserDto): Promise<UserResponseDto> {
     const user = await this.usersService.create(createUserDto);
@@ -111,7 +114,8 @@ export class UsersController {
   })
   @ApiNotFoundResponse({ description: 'Usuario no encontrado.' })
   @ApiConflictResponse({
-    description: 'El nombre de usuario ya existe o la persona ya tiene usuario.',
+    description:
+      'El nombre de usuario ya existe o la persona ya tiene usuario.',
   })
   async update(
     @Param('id') id: string,

@@ -1,6 +1,8 @@
 import { IdentityDocumentType, Prisma } from '../prisma/generated/client';
 
-export const IDENTITY_DOCUMENT_TYPE_REPOSITORY = Symbol('IDENTITY_DOCUMENT_TYPE_REPOSITORY');
+export const IDENTITY_DOCUMENT_TYPE_REPOSITORY = Symbol(
+  'IDENTITY_DOCUMENT_TYPE_REPOSITORY',
+);
 
 export interface IdentityDocumentTypeRepository {
   findAll(activeOnly?: boolean): Promise<IdentityDocumentType[]>;

@@ -57,7 +57,9 @@ export class PersonsController {
   @ApiBadRequestResponse({
     description: 'El parametro activeOnly debe ser true o false.',
   })
-  async findAll(@Query('activeOnly') activeOnly?: string): Promise<PersonResponseDto[]> {
+  async findAll(
+    @Query('activeOnly') activeOnly?: string,
+  ): Promise<PersonResponseDto[]> {
     const persons = await this.personsService.findAll(
       this.parseOptionalBoolean(activeOnly),
     );
@@ -93,7 +95,9 @@ export class PersonsController {
     description: 'Ya existe una persona con ese tipo y numero de documento.',
   })
   @ApiNotFoundResponse({ description: 'Tipo de documento no encontrado.' })
-  async create(@Body() createPersonDto: CreatePersonDto): Promise<PersonResponseDto> {
+  async create(
+    @Body() createPersonDto: CreatePersonDto,
+  ): Promise<PersonResponseDto> {
     const person = await this.personsService.create({
       identityDocumentTypeId: this.parseBigInt(
         createPersonDto.identityDocumentTypeId,
@@ -200,7 +204,9 @@ export class PersonsController {
     try {
       return BigInt(value);
     } catch {
-      throw new BadRequestException('El identityDocumentTypeId debe ser un entero valido.');
+      throw new BadRequestException(
+        'El identityDocumentTypeId debe ser un entero valido.',
+      );
     }
   }
 

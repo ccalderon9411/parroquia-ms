@@ -20,7 +20,7 @@ import type { AppConfiguration } from '../types/configuration';
         return `postgresql://${encodedUser}:${encodedPassword}@${host}:${port}/${name}`;
       },
       inject: [ConfigService],
-    }
+    },
   ],
   exports: [PrismaService],
 })

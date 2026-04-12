@@ -20,8 +20,8 @@ import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
       inject: [ConfigService],
       useFactory: (configService: ConfigService): JwtModuleOptions => {
         const config = configService.get<AppConfiguration>('config');
-        const accessExpiresIn =
-          config?.auth?.jwt.accessExpiresIn as SignOptions['expiresIn'];
+        const accessExpiresIn = config?.auth?.jwt
+          .accessExpiresIn as SignOptions['expiresIn'];
 
         return {
           secret: config?.auth?.jwt.accessSecret,

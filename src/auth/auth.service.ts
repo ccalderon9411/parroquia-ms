@@ -1,8 +1,4 @@
-import {
-  Inject,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcryptjs';
@@ -60,10 +56,7 @@ export class AuthService {
     });
   }
 
-  private async validateUser(
-    username: string,
-    password: string,
-  ) {
+  private async validateUser(username: string, password: string) {
     const user = await this.getUserByUsername(username);
 
     if (!user?.active) {
@@ -91,10 +84,10 @@ export class AuthService {
     personId: string,
   ): Promise<AuthTokensDto> {
     const config = this.configService.get<AppConfiguration>('config');
-    const accessExpiresIn =
-      config?.auth?.jwt.accessExpiresIn as SignOptions['expiresIn'];
-    const refreshExpiresIn =
-      config?.auth?.jwt.refreshExpiresIn as SignOptions['expiresIn'];
+    const accessExpiresIn = config?.auth?.jwt
+      .accessExpiresIn as SignOptions['expiresIn'];
+    const refreshExpiresIn = config?.auth?.jwt
+      .refreshExpiresIn as SignOptions['expiresIn'];
     const payload: JwtPayload = {
       sub: userId,
       username,

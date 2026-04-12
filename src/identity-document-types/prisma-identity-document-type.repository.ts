@@ -1,15 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import {
-  IdentityDocumentType,
-  Prisma,
-} from '../prisma/generated/client';
+import { IdentityDocumentType, Prisma } from '../prisma/generated/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { IdentityDocumentTypeRepository } from './identity-document-type.repository';
 
 @Injectable()
-export class PrismaIdentityDocumentTypeRepository
-  implements IdentityDocumentTypeRepository
-{
+export class PrismaIdentityDocumentTypeRepository implements IdentityDocumentTypeRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   findAll(activeOnly?: boolean): Promise<IdentityDocumentType[]> {

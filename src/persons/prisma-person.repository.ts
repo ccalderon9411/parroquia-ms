@@ -10,7 +10,11 @@ export class PrismaPersonRepository implements PersonRepository {
   findAll(activeOnly?: boolean): Promise<Person[]> {
     return this.prisma.person.findMany({
       where: activeOnly ? { active: true } : undefined,
-      orderBy: [{ paternalSurname: 'asc' }, { maternalSurname: 'asc' }, { givenNames: 'asc' }],
+      orderBy: [
+        { paternalSurname: 'asc' },
+        { maternalSurname: 'asc' },
+        { givenNames: 'asc' },
+      ],
     });
   }
 

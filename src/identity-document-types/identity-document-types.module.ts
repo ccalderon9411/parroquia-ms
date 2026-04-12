@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PrismaModule } from '../prisma/prisma.module';
-import {
-  IDENTITY_DOCUMENT_TYPE_REPOSITORY,
-} from './identity-document-type.repository';
+import { IDENTITY_DOCUMENT_TYPE_REPOSITORY } from './identity-document-type.repository';
 import { IdentityDocumentTypesController } from './identity-document-types.controller';
 import { IdentityDocumentTypesService } from './identity-document-types.service';
 import { PrismaIdentityDocumentTypeRepository } from './prisma-identity-document-type.repository';

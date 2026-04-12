@@ -31,7 +31,9 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Autenticar usuario y emitir access y refresh token.' })
+  @ApiOperation({
+    summary: 'Autenticar usuario y emitir access y refresh token.',
+  })
   @ApiBody({ type: LoginDto })
   @ApiOkResponse({
     description: 'Tokens emitidos correctamente.',

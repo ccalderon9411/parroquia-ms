@@ -56,6 +56,27 @@ $ yarn prisma:generate
 
 Cuando necesites importar PrismaClient o Prisma en código de aplicación, usa src/prisma/generated/client.
 
+Para crear tu primer tipo de documento, persona y usuario administrador desde la base de datos:
+
+```bash
+$ yarn prisma:seed
+```
+
+Variables opcionales del seed:
+
+```bash
+SEED_IDENTITY_DOCUMENT_ABBREVIATION=DNI
+SEED_IDENTITY_DOCUMENT_DESCRIPTION="Documento Nacional de Identidad"
+SEED_PERSON_DOCUMENT_NUMBER=00000000
+SEED_PERSON_GIVEN_NAMES=Admin
+SEED_PERSON_PATERNAL_SURNAME=Parroquial
+SEED_PERSON_MATERNAL_SURNAME=Inicial
+SEED_USER_USERNAME=admin
+SEED_USER_PASSWORD=tu-clave-inicial
+```
+
+SEED_USER_PASSWORD es obligatoria y debe tener al menos 6 caracteres. Si el registro ya existe, el seed lo reutiliza y actualiza el usuario con la contraseña configurada.
+
 ## Run tests
 
 ```bash

@@ -1,11 +1,28 @@
-# Nestjs specific
-/dist
+# Dependencies
 /node_modules
+
+# Package manager artifacts
+/.yarn/*
+!/.yarn/patches/
+!/.yarn/plugins/
+!/.yarn/releases/
+!/.yarn/sdks/
+!/.yarn/versions/
+/package-lock.json
+/pnpm-lock.yaml
+
+# Build and generated output
+/dist
 /build
+/coverage
+/.nyc_output
 /tmp
+/.temp
+/.tmp
+/src/prisma/generated
 
 # Logs
-logs
+/logs/
 *.log
 npm-debug.log*
 pnpm-debug.log*
@@ -13,40 +30,31 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# dotenv environment variable files
+# Environment files
 .env
-.env.development
-.env.test
-.env.production
+.env.*
+!.env.example
 
-# temp directory
-.temp
-.tmp
-
-# Yarn
-.yarn
-.yarnrc.yml
-yarn.lock
-
-# Docker
-.devcontainer
-
-# VSCode
-.vscode/*
-/src/prisma/generated
-
-# Tests
-/coverage
-/.nyc_output
-test-results
-test-results/*
-test-report.xml
-junit.xml
-sonar-project.properties
-gl-sast-report.json
-gl-secret-detection-report.json
-semgrep.sarif
-.scannerwork
-codecov
-codecov.*
+# Test and analysis reports
+/test-results/
+/test-report.xml
+/junit.xml
+/gl-sast-report.json
+/gl-secret-detection-report.json
+/semgrep.sarif
+/.scannerwork/
+/codecov/
+/codecov.*
 !codecov.yml
+
+# Editor settings
+/.vscode/*
+!/.vscode/settings.json
+!/.vscode/extensions.json
+!/.vscode/launch.json
+!/.vscode/tasks.json
+/.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

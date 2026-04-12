@@ -7,53 +7,186 @@ datasource db {
   provider = "postgresql"
 }
 
+enum SacramentType {
+  BAPTISM
+  CONFIRMATION
+  MARRIAGE
+}
+
 model IdentityDocumentType {
-  id           BigInt  @id @default(autoincrement())
-  abbreviation String  @unique 
-  description  String? 
-  active       Boolean @default(true)
+  id           BigInt   @id @default(autoincrement())
+  abbreviation String   @unique
+  description  String?
+  active       Boolean  @default(true)
   createdAt    DateTime @default(now())
   createdBy    String?
   updatedAt    DateTime @default(now()) @updatedAt
   updatedBy    String?
-  
+
   people Person[]
 }
 
 model Person {
-  id                       String    @id @default(uuid()) @db.Uuid
-  identityDocumentTypeId   BigInt    
-  identityDocumentNumber   String    
-  givenNames               String    
-  paternalSurname          String    
-  maternalSurname          String    
-  birthDate                DateTime? 
-  birthPlace               String?   
-  father                   String?   
-  mother                   String?   
-  active                   Boolean   @default(true)
-  createdAt                DateTime  @default(now())
-  createdBy                String?
-  updatedAt                DateTime  @default(now()) @updatedAt
-  updatedBy                String?
+  id                     String    @id @default(uuid()) @db.Uuid
+  identityDocumentTypeId BigInt
+  identityDocumentNumber String
+  givenNames             String
+  paternalSurname        String
+  maternalSurname        String
+  birthDate              DateTime?
+  birthPlace             String?
+  father                 String?
+  mother                 String?
+  active                 Boolean   @default(true)
+  createdAt              DateTime  @default(now())
+  createdBy              String?
+  updatedAt              DateTime  @default(now()) @updatedAt
+  updatedBy              String?
 
   identityDocumentType IdentityDocumentType @relation(fields: [identityDocumentTypeId], references: [id])
   user                 User?
+  priests              Priest[]
+  baptisms             BaptismDetail[]
+  confirmations        ConfirmationDetail[]
+  marriagesAsGroom     MarriageDetail[]     @relation("MarriageDetailGroom")
+  marriagesAsBride     MarriageDetail[]     @relation("MarriageDetailBride")
 
   @@unique([identityDocumentTypeId, identityDocumentNumber])
 }
 
 model User {
-  id        String   @id @default(uuid()) @db.Uuid
-  personId  String   @unique @db.Uuid
-  username  String   @unique
-  password  String   
+  id               String   @id @default(uuid()) @db.Uuid
+  personId         String   @unique @db.Uuid
+  username         String   @unique
+  password         String
   refreshTokenHash String?
+  active           Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  createdBy        String?
+  updatedAt        DateTime @default(now()) @updatedAt
+  updatedBy        String?
+
+  person Person @relation(fields: [personId], references: [id])
+}
+
+model Parish {
+  id        BigInt   @id @default(autoincrement())
+  name      String   @unique
+  address   String?
+  phone     String?
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
   createdBy String?
   updatedAt DateTime @default(now()) @updatedAt
   updatedBy String?
 
-  person    Person   @relation(fields: [personId], references: [id])
+  parishPriests    ParishPriest[]
+  sacramentRecords SacramentRecord[]
+}
+
+model Priest {
+  id        BigInt   @id @default(autoincrement())
+  personId  String   @db.Uuid
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @default(now()) @updatedAt
+  updatedBy String?
+
+  parishPriests    ParishPriest[]
+  sacramentRecords SacramentRecord[]
+  person           Person            @relation(fields: [personId], references: [id])
+
+  @@unique([personId])
+}
+
+model ParishPriest {
+  id        BigInt   @id @default(autoincrement())
+  parishId  BigInt
+  priestId  BigInt
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @default(now()) @updatedAt
+  updatedBy String?
+
+  parish Parish @relation(fields: [parishId], references: [id])
+  priest Priest @relation(fields: [priestId], references: [id])
+
+  @@index([parishId])
+  @@index([priestId])
+  @@index([active])
+  @@index([parishId, priestId])
+}
+
+model SacramentRecord {
+  id          BigInt        @id @default(autoincrement())
+  type        SacramentType
+  parishId    BigInt
+  priestId    BigInt
+  date        DateTime
+  place       String
+  bookNumber  String
+  folioNumber String
+  entryNumber String
+  active      Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  createdBy   String?
+  updatedAt   DateTime      @default(now()) @updatedAt
+  updatedBy   String?
+
+  parish             Parish              @relation(fields: [parishId], references: [id])
+  priest             Priest              @relation(fields: [priestId], references: [id])
+  baptismDetail      BaptismDetail?
+  confirmationDetail ConfirmationDetail?
+  marriageDetail     MarriageDetail?
+
+  @@unique([type, parishId, bookNumber, folioNumber, entryNumber])
+  @@index([parishId])
+  @@index([priestId])
+  @@index([date])
+  @@index([active])
+}
+
+model BaptismDetail {
+  id        BigInt  @id
+  personId  String  @db.Uuid
+  godfather String?
+  godmother String?
+
+  sacramentRecord SacramentRecord @relation(fields: [id], references: [id])
+  person          Person          @relation(fields: [personId], references: [id])
+
+  @@index([personId])
+}
+
+model ConfirmationDetail {
+  id        BigInt  @id
+  personId  String  @db.Uuid
+  godfather String?
+  godmother String?
+
+  sacramentRecord SacramentRecord @relation(fields: [id], references: [id])
+  person          Person          @relation(fields: [personId], references: [id])
+
+  @@index([personId])
+}
+
+model MarriageDetail {
+  id                BigInt   @id
+  groomId           String   @db.Uuid
+  groomBaptismDate  DateTime
+  groomBaptismPlace String
+  brideId           String   @db.Uuid
+  brideBaptismDate  DateTime
+  brideBaptismPlace String
+  witness1          String
+  witness2          String
+
+  sacramentRecord SacramentRecord @relation(fields: [id], references: [id])
+  groom           Person          @relation("MarriageDetailGroom", fields: [groomId], references: [id])
+  bride           Person          @relation("MarriageDetailBride", fields: [brideId], references: [id])
+
+  @@index([groomId])
+  @@index([brideId])
 }

@@ -1,5 +1,5 @@
 // List of environments
-const environments = {
+const environments: Readonly<Record<string, string>> = {
   test: '.env.test',
   dev: '.env',
   qa: '.env.qa',
@@ -8,6 +8,7 @@ const environments = {
 };
 
 export const getEnvFilePath = (): string[] => {
-  const envFile = environments[process.env.NODE_ENV ?? ''];
+  const nodeEnv = process.env.NODE_ENV;
+  const envFile = nodeEnv ? environments[nodeEnv] : undefined;
   return envFile ? [envFile, '.env'] : ['.env'];
 };

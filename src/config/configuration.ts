@@ -1,9 +1,10 @@
-import { registerAs } from "@nestjs/config";
-import { AppConfiguration } from "../types/configuration";
+import { registerAs } from '@nestjs/config';
+import { AppConfiguration } from '../types/configuration';
 import * as PACKAGE_JSON from '../../package.json';
 
-
-export default registerAs("config", (): AppConfiguration => ({
+export default registerAs(
+  'config',
+  (): AppConfiguration => ({
     project: {
       apiPrefix: process.env.API_PREFIX || 'API-PREFIX',
       name: PACKAGE_JSON.name,
@@ -12,22 +13,23 @@ export default registerAs("config", (): AppConfiguration => ({
       author: {
         name: PACKAGE_JSON.author.name,
         url: PACKAGE_JSON.author.url,
-        email: PACKAGE_JSON.author.email
+        email: PACKAGE_JSON.author.email,
       },
       repository: PACKAGE_JSON.repository,
       bugs: PACKAGE_JSON.bugs,
       homepage: PACKAGE_JSON.homepage,
     },
     server: {
-        port: Number.parseInt(process.env.PORT || "3000", 10),
-        context: process.env.CONTEXT || 'api',
-        cors: {
-            enabled: process.env.CORS_ENABLED?.toLowerCase() === 'true',
-            credentials: process.env.CORS_CREDENTIALS?.toLowerCase() === 'true',
-            origins: process.env.ORIGINS ? process.env.ORIGINS.split(',') : '*',
-            allowedHeaders: process.env.ALLOWED_HEADERS || 'Content-Type, Authorization',
-            allowedMethods: process.env.ALLOWED_METHODS || 'GET, POST, PUT, DELETE',
-        }
+      port: Number.parseInt(process.env.PORT || '3000', 10),
+      context: process.env.CONTEXT || 'api',
+      cors: {
+        enabled: process.env.CORS_ENABLED?.toLowerCase() === 'true',
+        credentials: process.env.CORS_CREDENTIALS?.toLowerCase() === 'true',
+        origins: process.env.ORIGINS ? process.env.ORIGINS.split(',') : '*',
+        allowedHeaders:
+          process.env.ALLOWED_HEADERS || 'Content-Type, Authorization',
+        allowedMethods: process.env.ALLOWED_METHODS || 'GET, POST, PUT, DELETE',
+      },
     },
     swagger: {
       path: process.env.SWAGGER_PATH || 'docs',
@@ -38,14 +40,17 @@ export default registerAs("config", (): AppConfiguration => ({
       password: process.env.DATABASE_PASSWORD || '',
       name: process.env.DATABASE_NAME || '',
       host: process.env.DATABASE_HOST || '',
-      port: Number.parseInt(process.env.DATABASE_PORT || "5432", 10),
+      port: Number.parseInt(process.env.DATABASE_PORT || '5432', 10),
     },
     auth: {
       jwt: {
-        accessSecret: process.env.JWT_ACCESS_SECRET || 'change-me-access-secret',
-        refreshSecret: process.env.JWT_REFRESH_SECRET || 'change-me-refresh-secret',
+        accessSecret:
+          process.env.JWT_ACCESS_SECRET || 'change-me-access-secret',
+        refreshSecret:
+          process.env.JWT_REFRESH_SECRET || 'change-me-refresh-secret',
         accessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN || '15m',
         refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
       },
-    }
-}));
+    },
+  }),
+);

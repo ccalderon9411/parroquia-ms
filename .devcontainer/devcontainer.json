@@ -1,0 +1,33 @@
+{
+  "name": "NestJS + Prisma PRO",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "runServices": ["app", "db", "pgadmin"],
+  "workspaceFolder": "/workspace",
+  "remoteEnv": {
+    "PATH": "/home/node/.local/bin:${containerEnv:PATH}"
+  },
+  "forwardPorts": [3003, 5432, 5050],
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
+  "postCreateCommand": "mkdir -p $HOME/.local/bin && corepack enable --install-directory $HOME/.local/bin && corepack yarn install",
+  "shutdownAction": "stopCompose",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "vscode.typescript-language-features",
+        "eslint.workingDirectories": [
+          "."
+        ]
+      },
+      "extensions": [
+        "ms-azuretools.vscode-containers",
+        "ms-vscode-remote.remote-containers",
+        "vscode.typescript-language-features",
+        "vscode.json-language-features"
+      ]
+    }
+  }
+}

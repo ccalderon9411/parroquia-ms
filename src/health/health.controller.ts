@@ -19,7 +19,7 @@ export class HealthController {
   @HealthCheck()
   liveness() {
     return this.healthCheckService.check([
-      async () => this.healthService.isAlive('application'),
+      () => this.healthService.isAlive('application'),
     ]);
   }
 
@@ -27,7 +27,7 @@ export class HealthController {
   @HealthCheck()
   readiness() {
     return this.healthCheckService.check([
-      async () => this.healthService.isHealthy('database'),
+      () => this.healthService.isHealthy('database'),
     ]);
   }
 }
